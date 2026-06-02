@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta property="og:title" content="VinylVault — Coleção de Discos Clássicos">
+  <meta property="og:description" content="Explore os álbuns mais influentes da história da música. Uma coleção curada de vinil para os verdadeiros apreciadores.">
+  <meta property="og:type" content="website">
+  <meta name="description" content="VinylVault — Coleção de discos de vinil clássicos com faixas, artistas e avaliações.">
+
+  <title>VinylVault — Coleção de Discos Clássicos</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+
+      <a href="index.html" class="site-logo" aria-label="VinylVault — início">
+        <div class="site-logo__icon" aria-hidden="true">🎵</div>
+        <span class="site-logo__text">Vinyl<span>Vault</span></span>
+      </a>
+
+      <button class="hamburger" id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
+        <a href="index.html" class="nav-link active">Início</a>
+        <a href="#todos-discos" class="nav-link">Coleção</a>
+        <a href="#sobre" class="nav-link">Sobre</a>
+      </nav>
+
+      <form class="search-form" id="form-busca" role="search" aria-label="Buscar álbuns">
+        <input
+          type="search"
+          id="input-busca"
+          placeholder="Buscar artista, álbum..."
+          aria-label="Buscar álbum ou artista"
+          autocomplete="off"
+        >
+        <button type="submit" aria-label="Pesquisar">🔍</button>
+      </form>
+
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <section id="carousel-section" aria-label="Álbuns em destaque">
+
+      <div id="carouselVinyl" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators" aria-label="Navegação de slides"></div>
+
+        <div class="carousel-inner" role="region" aria-live="polite">
+          <!-- Loader provisório -->
+          <div class="carousel-item active">
+            <div class="carousel-slide-inner" style="background:#1a1612">
+              <div class="carousel-caption-custom">
+                <div class="loading-spinner">
+                  <div class="spinner-ring"></div>
+                  <span>Carregando destaques...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselVinyl" data-bs-slide="prev" aria-label="Slide anterior">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselVinyl" data-bs-slide="next" aria-label="Próximo slide">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+
+      </div>
+    </section>
+
+    <section id="todos-discos" class="container py-5" aria-label="Todos os discos da coleção">
+
+      <div class="section-header">
+        <h2 class="section-title">Toda a Coleção</h2>
+        <span class="section-count" id="total-discos" aria-live="polite"></span>
+      </div>
+
+      <div class="row g-4" id="discos-grid" aria-label="Lista de álbuns">
+        <div class="col-12 text-center py-5">
+          <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <span>Carregando coleção...</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="sobre" class="sobre-section" aria-label="Sobre o projeto e o autor">
+      <div class="container">
+        <div class="row align-items-start g-5">
+
+          <div class="col-12 col-md-7">
+            <h2 class="sobre-titulo">Sobre o VinylVault</h2>
+            <p class="sobre-desc">
+              VinylVault é um acervo digital dedicado aos álbuns mais influentes da história da música.
+              De jazz clássico a hip-hop nacional, cada disco conta uma história que vai além das faixas —
+              uma janela para o contexto cultural, social e artístico de sua época.
+            </p>
+            <p class="sobre-desc mt-3">
+              O projeto foi desenvolvido como aplicação web dinâmica, com dados servidos por uma API REST
+              simulada via JSON Server. As informações são carregadas e renderizadas por JavaScript puro,
+              sem frameworks, priorizando boas práticas de HTML semântico, CSS moderno e responsividade.
+            </p>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <h2 class="sobre-titulo">Autoria</h2>
+            <div class="autoria-card">
+              <div class="autoria-avatar" aria-hidden="true">🎧</div>
+              <div>
+                <p class="autoria-nome">Gabriel Alves da Silva Diógenes</p>
+                <p class="autoria-meta">
+                  Curso: Ciência da Computação<br>
+                  Matéria: Desenvolvimento de Interfaces Web<br>
+                  Semestre: 2026/1
+                </p>
+                <div class="social-links" aria-label="Redes sociais">
+                  <a href="#" aria-label="GitHub">GH</a>
+                  <a href="#" aria-label="LinkedIn">in</a>
+                  <a href="#" aria-label="Instagram">IG</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-logo">🎵 VinylVault</p>
+      <p class="footer-copy">
+        &copy; 2025 VinylVault · Projeto acadêmico — PUC Minas · Ciência da Computação
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    const btnHamb = document.getElementById('btn-hamburger');
+    const nav = document.getElementById('site-nav');
+    btnHamb?.addEventListener('click', () => {
+      nav.classList.toggle('nav-open');
+      const open = nav.classList.contains('nav-open');
+      btnHamb.setAttribute('aria-expanded', open);
+      btnHamb.textContent = open ? '✕' : '☰';
+    });
+
+    const observer = new MutationObserver(() => {
+      const cards = document.querySelectorAll('.vinyl-card');
+      const el = document.getElementById('total-discos');
+      if (el && cards.length > 0) el.textContent = `${cards.length} álbuns`;
+    });
+    const grid = document.getElementById('discos-grid');
+    if (grid) observer.observe(grid, { childList: true });
+  </script>
+
+</body>
+</html>

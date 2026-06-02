@@ -1,0 +1,325 @@
+{
+  "discos": [
+    {
+      "id": 1,
+      "nome": "Kind of Blue",
+      "artista": "Miles Davis",
+      "ano": 1959,
+      "genero": "Jazz",
+      "gravadora": "Columbia Records",
+      "descricao": "Considerado um dos álbuns de jazz mais influentes de todos os tempos, Kind of Blue marcou a transição para o jazz modal e redefiniu o gênero.",
+      "conteudo": "Gravado em apenas duas sessões em 1959, este álbum icônico apresenta um ensemble extraordinário incluindo John Coltrane e Bill Evans. A abordagem modal substituiu a estrutura de acordes complexa do bebop por escalas mais abertas, criando um som mais contemplativo e etéreo que influenciou gerações de músicos.",
+      "duracao": "45 min",
+      "destaque": true,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/1062/600/600"
+    },
+    {
+      "id": 2,
+      "nome": "Rumours",
+      "artista": "Fleetwood Mac",
+      "ano": 1977,
+      "genero": "Rock Clássico",
+      "gravadora": "Warner Bros.",
+      "descricao": "Um dos álbuns mais vendidos da história, gravado em meio a relacionamentos conturbados entre os membros da banda.",
+      "conteudo": "Rumours foi gravado enquanto dois casais dentro da banda estavam se separando, e essa tensão emocional permeia cada faixa. O resultado é um álbum de pop rock impecável que mistura melodias cativantes com letras de dor, traição e redenção. Vendeu mais de 40 milhões de cópias mundialmente.",
+      "duracao": "39 min",
+      "destaque": true,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/1025/600/600"
+    },
+    {
+      "id": 3,
+      "nome": "Abbey Road",
+      "artista": "The Beatles",
+      "ano": 1969,
+      "genero": "Rock",
+      "gravadora": "Apple Records",
+      "descricao": "O penúltimo álbum dos Beatles, famoso pela capa icônica e pelo medley do lado B.",
+      "conteudo": "Abbey Road foi o último álbum gravado pelos Beatles e representa o pico de seu refinamento sonoro. O lado B contém um brilhante medley de fragmentos musicais costurados pelo produtor George Martin. A capa com os quatro cruzando a rua tornou-se uma das imagens mais reconhecidas da cultura pop.",
+      "duracao": "47 min",
+      "destaque": true,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/145/600/600"
+    },
+    {
+      "id": 4,
+      "nome": "Thriller",
+      "artista": "Michael Jackson",
+      "ano": 1982,
+      "genero": "Pop / R&B",
+      "gravadora": "Epic Records",
+      "descricao": "O álbum mais vendido de todos os tempos, com mais de 66 milhões de cópias vendidas globalmente.",
+      "conteudo": "Thriller redefiniu o pop dos anos 80 com sua mistura inovadora de rock, funk e R&B. Produzido por Quincy Jones, o álbum gerou sete singles no Top 10, um feito sem precedentes. O videoclipe de 'Thriller' com 14 minutos revolucionou o formato do vídeo musical.",
+      "duracao": "42 min",
+      "destaque": true,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/1069/600/600"
+    },
+    {
+      "id": 5,
+      "nome": "The Dark Side of the Moon",
+      "artista": "Pink Floyd",
+      "ano": 1973,
+      "genero": "Rock Progressivo",
+      "gravadora": "Harvest Records",
+      "descricao": "Uma das obras mais ambiciosas do rock, abordando temas como tempo, ganância e loucura.",
+      "conteudo": "Dark Side of the Moon ficou na parada da Billboard por 741 semanas consecutivas. O álbum é uma jornada sonora coesa que explora temas filosóficos sobre a condição humana, utilizando inovações de estúdio avançadas para a época. A capa com o prisma é um dos ícones visuais do rock.",
+      "duracao": "43 min",
+      "destaque": false,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/1082/600/600"
+    },
+    {
+      "id": 6,
+      "nome": "Blue",
+      "artista": "Joni Mitchell",
+      "ano": 1971,
+      "genero": "Folk / Singer-Songwriter",
+      "gravadora": "Reprise Records",
+      "descricao": "Frequentemente considerado o melhor álbum de todos os tempos por críticos de música.",
+      "conteudo": "Blue é uma confissão emocional crua e poética que documentou as viagens e relacionamentos de Mitchell com honestidade sem igual. Sua guitarra de afinação aberta e voz de contralto único criaram um estilo que influenciou incontáveis artistas. Rolling Stone o classificou como o segundo maior álbum de todos os tempos.",
+      "duracao": "35 min",
+      "destaque": false,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/157/600/600"
+    },
+    {
+      "id": 7,
+      "nome": "Nevermind",
+      "artista": "Nirvana",
+      "ano": 1991,
+      "genero": "Grunge / Rock Alternativo",
+      "gravadora": "DGC Records",
+      "descricao": "O álbum que levou o grunge ao mainstream e definiu a cultura alternativa dos anos 90.",
+      "conteudo": "Nevermind chegou como um furacão e derrubou a dominância do hair metal nas paradas. Com a produção polida de Butch Vig, Cobain conseguiu fazer música crua e emotiva soar como pop radio-friendly. 'Smells Like Teen Spirit' se tornou o hino de uma geração.",
+      "duracao": "45 min",
+      "destaque": false,
+      "avaliacao": 4,
+      "imagemPrincipal": "https://picsum.photos/id/1050/600/600"
+    },
+    {
+      "id": 8,
+      "nome": "Sobrevivendo no Inferno",
+      "artista": "Racionais MC's",
+      "ano": 1997,
+      "genero": "Hip-Hop / Rap Nacional",
+      "gravadora": "Zimbabwe Records",
+      "descricao": "O álbum mais importante do rap brasileiro, retratando a realidade da periferia de São Paulo.",
+      "conteudo": "Sobrevivendo no Inferno é uma obra que transcende o rap e se torna literatura. Mano Brown, Edi Rock, Ice Blue e KL Jay criaram um retrato cru e verdadeiro da violência, fé e resistência nas periferias paulistanas. O álbum vendeu mais de 1,5 milhão de cópias sem distribuição em grandes redes.",
+      "duracao": "71 min",
+      "destaque": false,
+      "avaliacao": 5,
+      "imagemPrincipal": "https://picsum.photos/id/1039/600/600"
+    }
+  ],
+  "faixas": [
+    {
+      "id": 1,
+      "discoId": 1,
+      "numero": 1,
+      "titulo": "So What",
+      "duracao": "9:22",
+      "descricao": "Abre o álbum com um tema modal contemplativo, apresentando o contrabaixo de Paul Chambers.",
+      "imagem": "https://picsum.photos/id/1062/400/300"
+    },
+    {
+      "id": 2,
+      "discoId": 1,
+      "numero": 2,
+      "titulo": "Freddie Freeloader",
+      "duracao": "9:46",
+      "descricao": "Blues de 12 compassos com Wynton Kelly substituindo Bill Evans ao piano.",
+      "imagem": "https://picsum.photos/id/1011/400/300"
+    },
+    {
+      "id": 3,
+      "discoId": 1,
+      "numero": 3,
+      "titulo": "Blue in Green",
+      "duracao": "5:37",
+      "descricao": "Balada melancólica cuja autoria foi disputada entre Miles e Bill Evans.",
+      "imagem": "https://picsum.photos/id/1015/400/300"
+    },
+    {
+      "id": 4,
+      "discoId": 1,
+      "numero": 4,
+      "titulo": "All Blues",
+      "duracao": "11:33",
+      "descricao": "Blues em compasso 6/4, com um groove hipnótico e solos memoráveis.",
+      "imagem": "https://picsum.photos/id/1016/400/300"
+    },
+    {
+      "id": 5,
+      "discoId": 1,
+      "numero": 5,
+      "titulo": "Flamenco Sketches",
+      "duracao": "9:26",
+      "descricao": "Encerra o álbum com improviso livre sobre cinco escalas modais.",
+      "imagem": "https://picsum.photos/id/1018/400/300"
+    },
+    {
+      "id": 6,
+      "discoId": 2,
+      "numero": 1,
+      "titulo": "Second Hand News",
+      "duracao": "2:43",
+      "descricao": "Abertura energética escrita por Lindsey Buckingham sobre o fim de um relacionamento.",
+      "imagem": "https://picsum.photos/id/1025/400/300"
+    },
+    {
+      "id": 7,
+      "discoId": 2,
+      "numero": 2,
+      "titulo": "Dreams",
+      "duracao": "4:17",
+      "descricao": "O único número 1 da carreira da banda, cantado por Stevie Nicks.",
+      "imagem": "https://picsum.photos/id/1026/400/300"
+    },
+    {
+      "id": 8,
+      "discoId": 2,
+      "numero": 3,
+      "titulo": "The Chain",
+      "duracao": "4:29",
+      "descricao": "A única música do álbum com créditos para todos os membros, famosa pela linha de baixo.",
+      "imagem": "https://picsum.photos/id/1029/400/300"
+    },
+    {
+      "id": 9,
+      "discoId": 2,
+      "numero": 4,
+      "titulo": "Go Your Own Way",
+      "duracao": "3:38",
+      "descricao": "Rock clássico de Buckingham sobre a separação de Stevie Nicks.",
+      "imagem": "https://picsum.photos/id/1031/400/300"
+    },
+    {
+      "id": 10,
+      "discoId": 3,
+      "numero": 1,
+      "titulo": "Come Together",
+      "duracao": "4:19",
+      "descricao": "Riff de baixo icônico e letra surrealista de John Lennon.",
+      "imagem": "https://picsum.photos/id/145/400/300"
+    },
+    {
+      "id": 11,
+      "discoId": 3,
+      "numero": 2,
+      "titulo": "Something",
+      "duracao": "3:02",
+      "descricao": "Balada de George Harrison, considerada por Sinatra a melhor canção dos Beatles.",
+      "imagem": "https://picsum.photos/id/148/400/300"
+    },
+    {
+      "id": 12,
+      "discoId": 3,
+      "numero": 3,
+      "titulo": "Here Comes the Sun",
+      "duracao": "3:05",
+      "descricao": "Hino de esperança de George Harrison, uma das músicas mais amadas dos Beatles.",
+      "imagem": "https://picsum.photos/id/149/400/300"
+    },
+    {
+      "id": 13,
+      "discoId": 3,
+      "numero": 4,
+      "titulo": "Because",
+      "duracao": "2:45",
+      "descricao": "Harmonia vocal de três partes inspirada na Sonata ao Luar de Beethoven.",
+      "imagem": "https://picsum.photos/id/152/400/300"
+    },
+    {
+      "id": 14,
+      "discoId": 4,
+      "numero": 1,
+      "titulo": "Wanna Be Startin' Somethin'",
+      "duracao": "6:03",
+      "descricao": "Abertura frenética com vocais percussivos e groove irresistível.",
+      "imagem": "https://picsum.photos/id/1069/400/300"
+    },
+    {
+      "id": 15,
+      "discoId": 4,
+      "numero": 2,
+      "titulo": "Beat It",
+      "duracao": "4:18",
+      "descricao": "Rock/pop com solo de guitarra de Eddie Van Halen e mensagem anti-violência.",
+      "imagem": "https://picsum.photos/id/1070/400/300"
+    },
+    {
+      "id": 16,
+      "discoId": 4,
+      "numero": 3,
+      "titulo": "Billie Jean",
+      "duracao": "4:54",
+      "descricao": "O bassline mais reconhecível do pop, com dança moonwalk na primeira aparição ao vivo.",
+      "imagem": "https://picsum.photos/id/1071/400/300"
+    },
+    {
+      "id": 17,
+      "discoId": 4,
+      "numero": 4,
+      "titulo": "Thriller",
+      "duracao": "5:57",
+      "descricao": "Faixa-título com narração de Vincent Price e o videoclipe mais famoso da história.",
+      "imagem": "https://picsum.photos/id/1074/400/300"
+    },
+    {
+      "id": 18,
+      "discoId": 5,
+      "numero": 1,
+      "titulo": "Speak to Me / Breathe",
+      "duracao": "4:15",
+      "descricao": "Abertura atmosférica com batimentos cardíacos que estabelecem o tom filosófico do álbum.",
+      "imagem": "https://picsum.photos/id/1082/400/300"
+    },
+    {
+      "id": 19,
+      "discoId": 5,
+      "numero": 2,
+      "titulo": "Money",
+      "duracao": "6:22",
+      "descricao": "Riff de baixo em compasso 7/4 com efeitos sonoros de caixa registradora.",
+      "imagem": "https://picsum.photos/id/1083/400/300"
+    },
+    {
+      "id": 20,
+      "discoId": 5,
+      "numero": 3,
+      "titulo": "Time",
+      "duracao": "7:05",
+      "descricao": "Introdução de relógios alarmes e uma das letras mais impactantes sobre o tempo perdido.",
+      "imagem": "https://picsum.photos/id/1084/400/300"
+    },
+    {
+      "id": 21,
+      "discoId": 8,
+      "numero": 1,
+      "titulo": "Capítulo 4, Versículo 3",
+      "duracao": "8:12",
+      "descricao": "Abertura devastadora com estatísticas reais sobre a violência na periferia.",
+      "imagem": "https://picsum.photos/id/1039/400/300"
+    },
+    {
+      "id": 22,
+      "discoId": 8,
+      "numero": 2,
+      "titulo": "Tô Ouvindo Alguém Me Chamar",
+      "duracao": "5:45",
+      "descricao": "Reflexão espiritual sobre fé e resistência em meio à violência urbana.",
+      "imagem": "https://picsum.photos/id/1041/400/300"
+    },
+    {
+      "id": 23,
+      "discoId": 8,
+      "numero": 3,
+      "titulo": "Diário de um Detento",
+      "duracao": "9:18",
+      "descricao": "Relato do Massacre do Carandiru narrado em primeira pessoa, uma das letras mais impactantes do rap nacional.",
+      "imagem": "https://picsum.photos/id/1043/400/300"
+    }
+  ]
+}
