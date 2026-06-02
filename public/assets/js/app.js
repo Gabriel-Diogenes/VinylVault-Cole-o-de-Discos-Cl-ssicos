@@ -142,23 +142,23 @@ function montarDetalheInfo(disco) {
         </div>
         <div class="detalhe-infos-grid">
           <div class="info-item">
-            <span class="info-label">🗓 Ano</span>
+            <span class="info-label">Ano</span>
             <span class="info-valor">${disco.ano}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">🏷 Gravadora</span>
+            <span class="info-label">Gravadora</span>
             <span class="info-valor">${disco.gravadora}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">⏱ Duração</span>
+            <span class="info-label">Duração</span>
             <span class="info-valor">${disco.duracao}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">🎵 Gênero</span>
+            <span class="info-label">Gênero</span>
             <span class="info-valor">${disco.genero}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">⭐ Avaliação</span>
+            <span class="info-label">Avaliação</span>
             <span class="info-valor stars">${estrelas(disco.avaliacao)}</span>
           </div>
         </div>
@@ -199,7 +199,7 @@ function montarFaixas(faixas, nomeAlbum) {
         </div>
         <div class="faixa-info">
           <h4 class="faixa-titulo">${faixa.titulo}</h4>
-          <span class="faixa-duracao">⏱ ${faixa.duracao}</span>
+          <span class="faixa-duracao">${faixa.duracao}</span>
           <p class="faixa-desc">${faixa.descricao}</p>
         </div>
       </div>`;

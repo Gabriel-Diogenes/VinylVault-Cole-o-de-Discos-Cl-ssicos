@@ -71,15 +71,15 @@ vinylvault/
 
 ## 7. Critérios Atendidos
 
-- ✅ HTML semântico: `header`, `footer`, `main`, `nav`, `section`, `article`
-- ✅ Atributos `class` nos elementos principais
-- ✅ Formulário com 2+ campos e botão (busca no header)
-- ✅ Imagens reais via Lorem Picsum
-- ✅ Combinações de seletores CSS (hierarquia de componentes)
-- ✅ Propriedades CSS: `box-model` (margin/padding), `display`, `position`
-- ✅ Bootstrap: carousel + grid cards responsivo
-- ✅ JSON estruturado com entidade principal e secundária
-- ✅ Montagem dinâmica via JavaScript + Fetch API
-- ✅ Passagem de parâmetro por query string (`?id=`)
-- ✅ Responsividade: mobile, tablet e desktop
-- ✅ JSON Server como backend simulado
+- HTML semântico: `header`, `footer`, `main`, `nav`, `section`, `article`
+- Atributos `class` nos elementos principais
+- Formulário com 2+ campos e botão (busca no header)
+- Imagens reais via Lorem Picsum
+- Combinações de seletores CSS (hierarquia de componentes)
+- Propriedades CSS: `box-model` (margin/padding), `display`, `position`
+- Bootstrap: carousel + grid cards responsivo
+- JSON estruturado com entidade principal e secundária
+- Montagem dinâmica via JavaScript + Fetch API
+- Passagem de parâmetro por query string (`?id=`)
+- Responsividade: mobile, tablet e desktop
+- JSON Server como backend simulado
