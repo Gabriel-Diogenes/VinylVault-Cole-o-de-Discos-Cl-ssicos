@@ -1,20 +1,6 @@
 {
   "discos": [
     {
-      "id": 1,
-      "nome": "Kind of Blue",
-      "artista": "Miles Davis",
-      "ano": 1959,
-      "genero": "Jazz",
-      "gravadora": "Columbia Records",
-      "descricao": "Considerado um dos álbuns de jazz mais influentes de todos os tempos, Kind of Blue marcou a transição para o jazz modal e redefiniu o gênero.",
-      "conteudo": "Gravado em apenas duas sessões em 1959, este álbum icônico apresenta um ensemble extraordinário incluindo John Coltrane e Bill Evans. A abordagem modal substituiu a estrutura de acordes complexa do bebop por escalas mais abertas, criando um som mais contemplativo e etéreo que influenciou gerações de músicos.",
-      "duracao": "45 min",
-      "destaque": true,
-      "avaliacao": 5,
-      "imagemPrincipal": "https://picsum.photos/id/1062/600/600"
-    },
-    {
       "id": 2,
       "nome": "Rumours",
       "artista": "Fleetwood Mac",
@@ -111,54 +97,23 @@
       "destaque": false,
       "avaliacao": 5,
       "imagemPrincipal": "https://picsum.photos/id/1039/600/600"
+    },
+    {
+      "id": 9,
+      "nome": "teste",
+      "artista": "teste",
+      "ano": 2001,
+      "avaliacao": 5,
+      "genero": "teste",
+      "gravadora": "teste",
+      "duracao": "42min",
+      "descricao": "album de teste",
+      "conteudo": "esse é um album de teste 2",
+      "imagemPrincipal": "https://picsum.photos/id/89/600/600",
+      "destaque": true
     }
   ],
   "faixas": [
-    {
-      "id": 1,
-      "discoId": 1,
-      "numero": 1,
-      "titulo": "So What",
-      "duracao": "9:22",
-      "descricao": "Abre o álbum com um tema modal contemplativo, apresentando o contrabaixo de Paul Chambers.",
-      "imagem": "https://picsum.photos/id/1062/400/300"
-    },
-    {
-      "id": 2,
-      "discoId": 1,
-      "numero": 2,
-      "titulo": "Freddie Freeloader",
-      "duracao": "9:46",
-      "descricao": "Blues de 12 compassos com Wynton Kelly substituindo Bill Evans ao piano.",
-      "imagem": "https://picsum.photos/id/1011/400/300"
-    },
-    {
-      "id": 3,
-      "discoId": 1,
-      "numero": 3,
-      "titulo": "Blue in Green",
-      "duracao": "5:37",
-      "descricao": "Balada melancólica cuja autoria foi disputada entre Miles e Bill Evans.",
-      "imagem": "https://picsum.photos/id/1015/400/300"
-    },
-    {
-      "id": 4,
-      "discoId": 1,
-      "numero": 4,
-      "titulo": "All Blues",
-      "duracao": "11:33",
-      "descricao": "Blues em compasso 6/4, com um groove hipnótico e solos memoráveis.",
-      "imagem": "https://picsum.photos/id/1016/400/300"
-    },
-    {
-      "id": 5,
-      "discoId": 1,
-      "numero": 5,
-      "titulo": "Flamenco Sketches",
-      "duracao": "9:26",
-      "descricao": "Encerra o álbum com improviso livre sobre cinco escalas modais.",
-      "imagem": "https://picsum.photos/id/1018/400/300"
-    },
     {
       "id": 6,
       "discoId": 2,

@@ -33,11 +33,11 @@
 # 1. Instalar dependências
 npm install
 
-# 2. Iniciar o servidor (JSON Server + arquivos estáticos na porta 3001)
+# 2. Iniciar o servidor (JSON Server + arquivos estáticos na porta 3000)
 npm start
 
 # 3. Acessar no navegador
-# http://localhost:3001
+# http://localhost:3000
 ```
 
 > **Requisito:** Node.js 14+ instalado
@@ -83,3 +83,104 @@ vinylvault/
 - Passagem de parâmetro por query string (`?id=`)
 - Responsividade: mobile, tablet e desktop
 - JSON Server como backend simulado
+
+---
+
+## 8. CRUD — Semanas 16 e 17
+
+### Página adicionada: `cadastro_disco.html`
+
+Página completa de gerenciamento com as quatro operações do CRUD:
+
+| Operação | Método HTTP | Endpoint |
+|---|---|---|
+| **Read** — listar todos os discos | `GET` | `/discos` |
+| **Create** — cadastrar novo disco | `POST` | `/discos` |
+| **Update** — editar disco existente | `PUT` | `/discos/:id` |
+| **Delete** — excluir disco | `DELETE` | `/discos/:id` |
+
+### Funcionalidades implementadas
+
+- Formulário com **validação client-side** (campos obrigatórios, ano válido, feedback visual por campo)
+- **Preview da imagem** em tempo real ao digitar a URL
+- **Modo edição**: ao clicar em ✏️ na tabela, o formulário é preenchido e muda para modo PUT
+- **Modal de confirmação** antes de excluir (evita exclusão acidental)
+- **Toast de feedback** (sucesso / erro / info) após cada operação
+- **Filtro em tempo real** na tabela de discos cadastrados
+- **Tabela responsiva** com miniatura, nome, artista, ano e ações
+- Botão 👁 leva direto para a página de detalhe do disco
+
+### Testes de API (Postman / Thunder Client)
+
+Exemplos de requisições para testar:
+
+**GET — listar todos**
+```
+GET http://localhost:3001/discos
+```
+
+**GET — buscar por ID**
+```
+GET http://localhost:3001/discos/1
+```
+
+**POST — criar novo disco**
+```
+POST http://localhost:3001/discos
+Content-Type: application/json
+
+{
+  "nome": "Nouveau Album",
+  "artista": "Novo Artista",
+  "ano": 2024,
+  "genero": "Indie",
+  "gravadora": "Indie Records",
+  "duracao": "38 min",
+  "descricao": "Descrição do álbum.",
+  "conteudo": "Texto completo sobre o álbum.",
+  "imagemPrincipal": "https://picsum.photos/id/50/600/600",
+  "destaque": false,
+  "avaliacao": 4
+}
+```
+
+**PUT — atualizar disco (id=1)**
+```
+PUT http://localhost:3001/discos/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Kind of Blue (Editado)",
+  "artista": "Miles Davis",
+  "ano": 1959,
+  "genero": "Jazz Modal",
+  "avaliacao": 5,
+  "destaque": true
+}
+```
+
+**DELETE — excluir disco (id=1)**
+```
+DELETE http://localhost:3001/discos/1
+```
+
+### Estrutura de arquivos atualizada
+
+```
+vinylvault/
+├── db/
+│   └── db.json
+├── public/
+│   ├── index.html
+│   ├── detalhe.html
+│   ├── cadastro_disco.html      
+│   └── assets/
+│       ├── css/
+│       │   ├── styles.css
+│       │   └── cadastro.css     
+│       └── js/
+│           └── app.js           
+├── package.json
+└── README.md
+```

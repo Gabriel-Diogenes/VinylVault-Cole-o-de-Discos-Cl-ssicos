@@ -286,4 +286,305 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('detalhe-info')) {
     initDetalhe();
   }
+
+  if (document.getElementById('form-disco')) {
+    initCadastro();
+  }
 });
+
+const crud = {
+  modoEdicao: false,
+  idEditando: null,
+  todosDiscos: [],
+  idParaDeletar: null
+};
+
+function showToast(msg, tipo = 'sucesso') {
+  const toast = document.getElementById('toast-feedback');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.className = `crud-toast ${tipo} show`;
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+function validarForm() {
+  const campos = [
+    { id: 'campo-nome',      erroId: 'erro-nome',      msg: 'Informe o nome do álbum.' },
+    { id: 'campo-artista',   erroId: 'erro-artista',   msg: 'Informe o artista ou banda.' },
+    { id: 'campo-ano',       erroId: 'erro-ano',       msg: 'Informe um ano válido (1900–2099).', extra: v => v < 1900 || v > 2099 },
+    { id: 'campo-avaliacao', erroId: 'erro-avaliacao', msg: 'Selecione uma avaliação.' },
+    { id: 'campo-genero',    erroId: 'erro-genero',    msg: 'Informe o gênero musical.' },
+    { id: 'campo-descricao', erroId: 'erro-descricao', msg: 'Escreva uma descrição curta.' },
+  ];
+
+  let valido = true;
+
+  campos.forEach(({ id, erroId, msg, extra }) => {
+    const input = document.getElementById(id);
+    const erroEl = document.getElementById(erroId);
+    const val = input?.value?.trim();
+    const invalido = !val || (extra && extra(Number(val)));
+
+    if (invalido) {
+      input?.classList.add('invalido');
+      if (erroEl) erroEl.textContent = msg;
+      valido = false;
+    } else {
+      input?.classList.remove('invalido');
+      if (erroEl) erroEl.textContent = '';
+    }
+  });
+
+  return valido;
+}
+
+function lerFormulario() {
+  return {
+    nome:            document.getElementById('campo-nome')?.value.trim(),
+    artista:         document.getElementById('campo-artista')?.value.trim(),
+    ano:             Number(document.getElementById('campo-ano')?.value),
+    avaliacao:       Number(document.getElementById('campo-avaliacao')?.value),
+    genero:          document.getElementById('campo-genero')?.value.trim(),
+    gravadora:       document.getElementById('campo-gravadora')?.value.trim() || '',
+    duracao:         document.getElementById('campo-duracao')?.value.trim() || '',
+    descricao:       document.getElementById('campo-descricao')?.value.trim(),
+    conteudo:        document.getElementById('campo-conteudo')?.value.trim() || '',
+    imagemPrincipal: document.getElementById('campo-imagem')?.value.trim()
+                       || `https://picsum.photos/id/${Math.floor(Math.random()*100)+1}/600/600`,
+    destaque:        document.getElementById('campo-destaque')?.checked ?? false,
+  };
+}
+
+function preencherFormulario(disco) {
+  document.getElementById('campo-id').value         = disco.id;
+  document.getElementById('campo-nome').value       = disco.nome;
+  document.getElementById('campo-artista').value    = disco.artista;
+  document.getElementById('campo-ano').value        = disco.ano;
+  document.getElementById('campo-avaliacao').value  = disco.avaliacao;
+  document.getElementById('campo-genero').value     = disco.genero;
+  document.getElementById('campo-gravadora').value  = disco.gravadora || '';
+  document.getElementById('campo-duracao').value    = disco.duracao || '';
+  document.getElementById('campo-descricao').value  = disco.descricao;
+  document.getElementById('campo-conteudo').value   = disco.conteudo || '';
+  document.getElementById('campo-imagem').value     = disco.imagemPrincipal || '';
+  document.getElementById('campo-destaque').checked = disco.destaque ?? false;
+
+  document.getElementById('campo-imagem').dispatchEvent(new Event('input'));
+
+  crud.modoEdicao = true;
+  crud.idEditando = disco.id;
+  document.getElementById('form-titulo').textContent = 'Editar Disco';
+  const badge = document.getElementById('form-modo-badge');
+  badge.textContent = 'Editando';
+  badge.classList.add('editando');
+  document.getElementById('btn-salvar-text').textContent = 'Atualizar Disco';
+  document.getElementById('btn-cancelar').style.display = 'inline-flex';
+
+  document.querySelector('.crud-form-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetarFormulario() {
+  document.getElementById('form-disco').reset();
+  document.getElementById('campo-id').value = '';
+  document.querySelectorAll('.campo-erro').forEach(el => el.textContent = '');
+  document.querySelectorAll('.crud-input').forEach(el => el.classList.remove('invalido'));
+
+  const wrap = document.getElementById('img-preview-wrap');
+  if (wrap) wrap.style.display = 'none';
+
+  crud.modoEdicao = false;
+  crud.idEditando = null;
+  document.getElementById('form-titulo').textContent = 'Novo Disco';
+  const badge = document.getElementById('form-modo-badge');
+  badge.textContent = 'Cadastro';
+  badge.classList.remove('editando');
+  document.getElementById('btn-salvar-text').textContent = 'Salvar Disco';
+  document.getElementById('btn-cancelar').style.display = 'none';
+}
+
+async function carregarTabelaDiscos(filtro = '') {
+  try {
+    const res = await fetch(`${API_BASE}/discos`);
+    if (!res.ok) throw new Error('Erro ao buscar discos');
+    crud.todosDiscos = await res.json();
+    renderizarTabela(filtro);
+  } catch (err) {
+    const tbody = document.getElementById('tabela-discos-body');
+    if (tbody) tbody.innerHTML = `<tr class="tr-vazio"><td colspan="4">Não foi possível carregar os discos.</td></tr>`;
+  }
+}
+
+function renderizarTabela(filtro = '') {
+  const tbody = document.getElementById('tabela-discos-body');
+  const countEl = document.getElementById('lista-count');
+  if (!tbody) return;
+
+  const lower = filtro.toLowerCase();
+  const lista = filtro
+    ? crud.todosDiscos.filter(d =>
+        d.nome.toLowerCase().includes(lower) ||
+        d.artista.toLowerCase().includes(lower))
+    : crud.todosDiscos;
+
+  if (countEl) countEl.textContent = `${lista.length} disco${lista.length !== 1 ? 's' : ''}`;
+
+  if (lista.length === 0) {
+    tbody.innerHTML = `<tr class="tr-vazio"><td colspan="4">Nenhum disco encontrado.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = '';
+  lista.forEach(disco => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="td-album">
+          <img
+            src="${disco.imagemPrincipal || 'https://picsum.photos/id/1/40/40'}"
+            alt="${disco.nome}"
+            class="td-album-thumb"
+            onerror="this.src='https://picsum.photos/id/1/40/40'"
+          >
+          <div>
+            <span class="td-album-nome">${disco.nome}</span>
+            ${disco.destaque ? '<span class="td-destaque-badge">★ Destaque</span>' : ''}
+          </div>
+        </div>
+      </td>
+      <td class="d-none d-md-table-cell">${disco.artista}</td>
+      <td class="d-none d-sm-table-cell">${disco.ano}</td>
+      <td>
+        <div class="td-acoes">
+          <a href="detalhe.html?id=${disco.id}" class="btn-acao ver" title="Ver detalhes">👁</a>
+          <button class="btn-acao editar" title="Editar" onclick="editarDisco(${disco.id})"></button>
+          <button class="btn-acao excluir" title="Excluir" onclick="confirmarDelete(${disco.id}, '${disco.nome.replace(/'/g, "\\'")}')">🗑</button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function criarDisco(dados) {
+  const res = await fetch(`${API_BASE}/discos`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados)
+  });
+  if (!res.ok) throw new Error('Erro ao criar disco');
+  return res.json();
+}
+
+async function atualizarDisco(id, dados) {
+  const res = await fetch(`${API_BASE}/discos/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, ...dados })
+  });
+  if (!res.ok) throw new Error('Erro ao atualizar disco');
+  return res.json();
+}
+
+async function excluirDisco(id) {
+  const res = await fetch(`${API_BASE}/discos/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Erro ao excluir disco');
+  return true;
+}
+
+async function editarDisco(id) {
+  try {
+    const res = await fetch(`${API_BASE}/discos/${id}`);
+    if (!res.ok) throw new Error();
+    const disco = await res.json();
+    preencherFormulario(disco);
+  } catch {
+    showToast('Não foi possível carregar o disco para edição.', 'erro');
+  }
+}
+
+function confirmarDelete(id, nome) {
+  crud.idParaDeletar = id;
+  document.getElementById('modal-msg').textContent =
+    `Tem certeza que deseja excluir "${nome}"? Esta ação não pode ser desfeita.`;
+  document.getElementById('modal-delete').classList.add('aberto');
+}
+
+function initCadastro() {
+  carregarTabelaDiscos();
+  document.getElementById('form-disco')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validarForm()) return;
+
+    const dados = lerFormulario();
+    const btnText = document.getElementById('btn-salvar-text');
+    btnText.textContent = '⏳ Salvando...';
+
+    try {
+      if (crud.modoEdicao && crud.idEditando) {
+        await atualizarDisco(crud.idEditando, dados);
+        showToast(`"${dados.nome}" atualizado com sucesso!`, 'sucesso');
+      } else {
+        await criarDisco(dados);
+        showToast(`"${dados.nome}" adicionado à coleção!`, 'sucesso');
+      }
+      resetarFormulario();
+      await carregarTabelaDiscos();
+    } catch (err) {
+      showToast('Erro ao salvar. Verifique o JSON Server.', 'erro');
+    } finally {
+      btnText.textContent = crud.modoEdicao ? 'Atualizar Disco' : 'Salvar Disco';
+    }
+  });
+
+  document.getElementById('btn-cancelar')?.addEventListener('click', () => {
+    resetarFormulario();
+    showToast('Edição cancelada.', 'info');
+  });
+
+  document.getElementById('btn-confirm-delete')?.addEventListener('click', async () => {
+    if (!crud.idParaDeletar) return;
+    try {
+      await excluirDisco(crud.idParaDeletar);
+      showToast('🗑 Disco excluído com sucesso.', 'sucesso');
+      document.getElementById('modal-delete').classList.remove('aberto');
+      crud.idParaDeletar = null;
+      await carregarTabelaDiscos();
+    } catch {
+      showToast('Erro ao excluir. Tente novamente.', 'erro');
+    }
+  });
+
+  document.getElementById('btn-cancel-delete')?.addEventListener('click', () => {
+    document.getElementById('modal-delete').classList.remove('aberto');
+    crud.idParaDeletar = null;
+  });
+
+  document.getElementById('modal-delete')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) {
+      e.currentTarget.style.display = 'none';
+      crud.idParaDeletar = null;
+    }
+  });
+
+  let debounceTabela;
+  document.getElementById('filtro-lista')?.addEventListener('input', e => {
+    clearTimeout(debounceTabela);
+    debounceTabela = setTimeout(() => renderizarTabela(e.target.value), 300);
+  });
+
+  document.getElementById('campo-imagem')?.addEventListener('input', e => {
+    const url = e.target.value.trim();
+    const wrap = document.getElementById('img-preview-wrap');
+    const img  = document.getElementById('img-preview');
+    if (url && wrap && img) {
+      img.src = url;
+      img.onload  = () => { wrap.style.display = 'block'; };
+      img.onerror = () => { wrap.style.display = 'none'; };
+    } else if (wrap) {
+      wrap.style.display = 'none';
+    }
+  });
+}
+
+window.editarDisco     = editarDisco;
+window.confirmarDelete = confirmarDelete;

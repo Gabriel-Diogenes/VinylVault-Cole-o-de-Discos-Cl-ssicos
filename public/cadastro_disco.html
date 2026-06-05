@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastro e gerenciamento de discos — VinylVault">
+  <title>Gerenciar Discos | VinylVault</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/cadastro.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo" aria-label="VinylVault — início">
+        <div class="site-logo__icon" aria-hidden="true">🎵</div>
+        <span class="site-logo__text">Vinyl<span>Vault</span></span>
+      </a>
+
+      <button class="hamburger" id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false">☰</button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="index.html#todos-discos" class="nav-link">Coleção</a>
+        <a href="cadastro_disco.html" class="nav-link active">Gerenciar</a>
+        <a href="index.html#sobre" class="nav-link">Sobre</a>
+      </nav>
+
+      <form class="search-form" role="search"
+            onsubmit="event.preventDefault(); const q=this.querySelector('input').value; if(q) window.location='index.html?busca='+encodeURIComponent(q);">
+        <input type="search" placeholder="Buscar álbum..." aria-label="Buscar" autocomplete="off">
+        <button type="submit" aria-label="Pesquisar">Buscar</button>
+      </form>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+    <div class="container py-5">
+
+      <div class="crud-page-header">
+        <div>
+          <h1 class="crud-page-title">Gerenciar Discos</h1>
+          <p class="crud-page-sub">Cadastre, edite ou remova álbuns da coleção</p>
+        </div>
+        <a href="index.html" class="btn-back">← Voltar</a>
+      </div>
+
+      <div id="toast-feedback" class="crud-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+      <div class="row g-4">
+
+        <div class="col-12 col-lg-5">
+          <section class="crud-form-card" aria-label="Formulário de cadastro de disco">
+
+            <div class="crud-form-header">
+              <h2 class="crud-form-title" id="form-titulo">Novo Disco</h2>
+              <span class="crud-form-badge" id="form-modo-badge">Cadastro</span>
+            </div>
+
+            <form id="form-disco" novalidate>
+
+              <input type="hidden" id="campo-id">
+
+              <div class="row g-3">
+
+                <div class="col-12">
+                  <label for="campo-nome" class="crud-label">
+                    Nome do Álbum <span class="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="campo-nome"
+                    class="crud-input"
+                    placeholder="Ex: Kind of Blue"
+                    maxlength="100"
+                    required
+                  >
+                  <span class="campo-erro" id="erro-nome"></span>
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-artista" class="crud-label">
+                    Artista / Banda <span class="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="campo-artista"
+                    class="crud-input"
+                    placeholder="Ex: Miles Davis"
+                    maxlength="100"
+                    required
+                  >
+                  <span class="campo-erro" id="erro-artista"></span>
+                </div>
+
+                <div class="col-6">
+                  <label for="campo-ano" class="crud-label">
+                    Ano <span class="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    id="campo-ano"
+                    class="crud-input"
+                    placeholder="1970"
+                    min="1900"
+                    max="2099"
+                    required
+                  >
+                  <span class="campo-erro" id="erro-ano"></span>
+                </div>
+
+                <div class="col-6">
+                  <label for="campo-avaliacao" class="crud-label">
+                    Avaliação <span class="obrigatorio">*</span>
+                  </label>
+                  <select id="campo-avaliacao" class="crud-input" required>
+                    <option value="">--</option>
+                    <option value="1">★☆☆☆☆ (1)</option>
+                    <option value="2">★★☆☆☆ (2)</option>
+                    <option value="3">★★★☆☆ (3)</option>
+                    <option value="4">★★★★☆ (4)</option>
+                    <option value="5">★★★★★ (5)</option>
+                  </select>
+                  <span class="campo-erro" id="erro-avaliacao"></span>
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-genero" class="crud-label">
+                    Gênero <span class="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="campo-genero"
+                    class="crud-input"
+                    placeholder="Ex: Jazz, Rock, Pop..."
+                    maxlength="60"
+                    required
+                  >
+                  <span class="campo-erro" id="erro-genero"></span>
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-gravadora" class="crud-label">Gravadora</label>
+                  <input
+                    type="text"
+                    id="campo-gravadora"
+                    class="crud-input"
+                    placeholder="Ex: Columbia Records"
+                    maxlength="80"
+                  >
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-duracao" class="crud-label">Duração</label>
+                  <input
+                    type="text"
+                    id="campo-duracao"
+                    class="crud-input"
+                    placeholder="Ex: 42 min"
+                    maxlength="20"
+                  >
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-descricao" class="crud-label">
+                    Descrição curta <span class="obrigatorio">*</span>
+                  </label>
+                  <textarea
+                    id="campo-descricao"
+                    class="crud-input"
+                    rows="2"
+                    placeholder="Uma linha sobre o álbum..."
+                    maxlength="200"
+                    required
+                  ></textarea>
+                  <span class="campo-erro" id="erro-descricao"></span>
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-conteudo" class="crud-label">Texto completo</label>
+                  <textarea
+                    id="campo-conteudo"
+                    class="crud-input"
+                    rows="4"
+                    placeholder="Contexto histórico, curiosidades..."
+                    maxlength="800"
+                  ></textarea>
+                </div>
+
+                <div class="col-12">
+                  <label for="campo-imagem" class="crud-label">URL da Imagem</label>
+                  <input
+                    type="url"
+                    id="campo-imagem"
+                    class="crud-input"
+                    placeholder="https://picsum.photos/id/10/600/600"
+                  >
+                  <p class="campo-dica">
+                    Use <a href="https://picsum.photos" target="_blank" rel="noopener">picsum.photos</a>
+                    para imagens de teste. Ex: https://picsum.photos/id/42/600/600
+                  </p>
+                  <div id="img-preview-wrap" class="img-preview-wrap" style="display:none">
+                    <img id="img-preview" src="" alt="Preview da capa">
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label class="crud-toggle-label">
+                    <input type="checkbox" id="campo-destaque" class="crud-toggle-input">
+                    <span class="crud-toggle-track"></span>
+                    <span class="crud-toggle-text">Exibir no carrossel de destaques</span>
+                  </label>
+                </div>
+
+              </div>
+
+              <div class="crud-form-actions">
+                <button type="submit" class="btn-vinyl" id="btn-salvar">
+                  <span id="btn-salvar-text">Salvar Disco</span>
+                </button>
+                <button type="button" class="btn-cancelar" id="btn-cancelar" style="display:none">
+                  Cancelar edição
+                </button>
+              </div>
+
+            </form>
+          </section>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <section aria-label="Lista de discos cadastrados">
+
+            <div class="crud-list-header">
+              <h2 class="crud-list-title">Discos Cadastrados</h2>
+              <span class="crud-list-count" id="lista-count" aria-live="polite">—</span>
+            </div>
+
+            <div class="crud-filter-bar">
+              <input
+                type="search"
+                id="filtro-lista"
+                class="crud-input"
+                placeholder="Filtrar por nome ou artista..."
+                aria-label="Filtrar lista de discos"
+              >
+            </div>
+
+            <div class="crud-table-wrap">
+              <table class="crud-table" aria-label="Tabela de discos">
+                <thead>
+                  <tr>
+                    <th scope="col">Álbum</th>
+                    <th scope="col" class="d-none d-md-table-cell">Artista</th>
+                    <th scope="col" class="d-none d-sm-table-cell">Ano</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="tabela-discos-body">
+                  <tr>
+                    <td colspan="4" class="text-center py-4">
+                      <div class="loading-spinner">
+                        <div class="spinner-ring"></div>
+                        <span>Carregando...</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="modal-delete" class="crud-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="crud-modal">
+      <h3 id="modal-titulo" class="crud-modal-titulo">Confirmar exclusão</h3>
+      <p class="crud-modal-msg" id="modal-msg">Tem certeza que deseja excluir este disco?</p>
+      <div class="crud-modal-actions">
+        <button class="btn-delete-confirm" id="btn-confirm-delete">Sim, excluir</button>
+        <button class="btn-cancelar" id="btn-cancel-delete">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-logo">VinylVault</p>
+      <p class="footer-copy">&copy; 2025 VinylVault · Projeto acadêmico — PUC Minas · Ciência da Computação</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const btnHamb = document.getElementById('btn-hamburger');
+    const nav = document.getElementById('site-nav');
+    btnHamb?.addEventListener('click', () => {
+      nav.classList.toggle('nav-open');
+      const open = nav.classList.contains('nav-open');
+      btnHamb.setAttribute('aria-expanded', open);
+      btnHamb.textContent = open ? '✕' : '☰';
+    });
+  </script>
+</body>
+</html>

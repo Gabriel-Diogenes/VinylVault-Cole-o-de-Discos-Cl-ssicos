@@ -1,0 +1,512 @@
+.crud-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--spacing-md);
+}
+
+.crud-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 900;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.crud-page-sub {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.crud-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  min-width: 260px;
+  max-width: 360px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.crud-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.crud-toast.sucesso {
+  background: #1a3a1a;
+  border: 1px solid #2d6a2d;
+  color: #6fcf6f;
+}
+
+.crud-toast.erro {
+  background: #3a1a1a;
+  border: 1px solid #8b2020;
+  color: #e07070;
+}
+
+.crud-toast.info {
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.crud-form-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  position: sticky;
+  top: 80px;
+}
+
+.crud-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.crud-form-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.crud-form-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.crud-form-badge.editando {
+  background: rgba(100, 160, 255, 0.1);
+  color: #64a0ff;
+  border-color: #64a0ff;
+}
+
+.crud-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.obrigatorio {
+  color: var(--color-accent);
+}
+
+.crud-input {
+  width: 100%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  transition: var(--transition);
+  outline: none;
+  resize: none;
+}
+
+.crud-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.12);
+}
+
+.crud-input.invalido {
+  border-color: #e07070;
+}
+
+.crud-input::placeholder {
+  color: var(--color-text-faint);
+}
+
+.crud-input option {
+  background: var(--color-surface-2);
+}
+
+.campo-erro {
+  display: block;
+  font-size: 0.75rem;
+  color: #e07070;
+  margin-top: 4px;
+  min-height: 1rem;
+}
+
+.campo-dica {
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.campo-dica a {
+  color: var(--color-accent);
+}
+
+.img-preview-wrap {
+  margin-top: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  max-height: 120px;
+}
+
+.img-preview-wrap img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.crud-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.crud-toggle-input {
+  display: none;
+}
+
+.crud-toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.crud-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--color-text-faint);
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.crud-toggle-input:checked + .crud-toggle-track {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+}
+
+.crud-toggle-input:checked + .crud-toggle-track::after {
+  left: calc(100% - 17px);
+  background: var(--color-accent);
+}
+
+.crud-toggle-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.crud-form-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.btn-cancelar {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-cancelar:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+.crud-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.crud-list-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.crud-list-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+
+.crud-filter-bar {
+  margin-bottom: var(--spacing-md);
+}
+
+.crud-table-wrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.crud-table thead tr {
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.crud-table th {
+  padding: var(--spacing-md) var(--spacing-md);
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.crud-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+  color: var(--color-text);
+}
+
+.crud-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.crud-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.crud-table tbody tr:hover {
+  background: var(--color-surface-2);
+}
+
+.td-album {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.td-album-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  background: var(--color-surface-2);
+}
+
+.td-album-nome {
+  font-weight: 500;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.td-destaque-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  padding: 1px 6px;
+  border-radius: 99px;
+  display: block;
+  width: fit-content;
+  margin-top: 3px;
+}
+
+.td-acoes {
+  display: flex;
+  gap: var(--spacing-xs);
+  white-space: nowrap;
+}
+
+.btn-acao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-acao.editar:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.btn-acao.ver:hover {
+  border-color: #64a0ff;
+  background: rgba(100, 160, 255, 0.1);
+}
+
+.btn-acao.excluir:hover {
+  border-color: #e07070;
+  background: rgba(224, 112, 112, 0.1);
+}
+
+/* Linha vazia */
+.tr-vazio td {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--color-text-faint);
+  font-style: italic;
+}
+
+.crud-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.crud-modal-overlay.aberto {
+  display: flex;
+}
+
+.crud-modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.crud-modal-titulo {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-md);
+}
+
+.crud-modal-msg {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+.crud-modal-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.btn-delete-confirm {
+  background: #8b2020;
+  border: 1px solid #c0392b;
+  color: #ffcccc;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-delete-confirm:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+  .crud-form-card {
+    position: static;
+  }
+}
+
+@media (max-width: 576px) {
+  .crud-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .crud-form-card {
+    padding: var(--spacing-lg);
+  }
+
+  .td-album-nome {
+    max-width: 100px;
+  }
+
+  .crud-modal {
+    padding: var(--spacing-lg);
+  }
+}
