@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3001';
+const API_BASE = window.location.origin;
 
 function estrelas(n) {
   return '★'.repeat(n) + '☆'.repeat(5 - n);
