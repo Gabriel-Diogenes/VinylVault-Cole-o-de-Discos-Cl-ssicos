@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Coleção de discos de vinil — Trabalho Prático 1 PUC Minas",
   "scripts": {
-    "start": "json-server --watch db/db.json --port $PORT --host 0.0.0.0 --static public"
+    "start": "json-server --watch db/db.json --port $PORT --host 0.0.0.0 --static public",
+    "dev": "json-server --watch db/db.json --port 3001 --static public"
   },
   "dependencies": {
     "json-server": "^0.17.4"

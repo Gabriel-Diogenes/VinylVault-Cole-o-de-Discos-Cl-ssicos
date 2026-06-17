@@ -111,6 +111,20 @@
       "conteudo": "esse é um album de teste 2",
       "imagemPrincipal": "https://picsum.photos/id/89/600/600",
       "destaque": true
+    },
+    {
+      "nome": "teste",
+      "artista": "teste",
+      "ano": 1970,
+      "avaliacao": 5,
+      "genero": "Jazz",
+      "gravadora": "Teste",
+      "duracao": "45min",
+      "descricao": "teste",
+      "conteudo": "teste",
+      "imagemPrincipal": "https://picsum.photos/id/28/600/600",
+      "destaque": true,
+      "id": 10
     }
   ],
   "faixas": [
@@ -275,6 +289,72 @@
       "duracao": "9:18",
       "descricao": "Relato do Massacre do Carandiru narrado em primeira pessoa, uma das letras mais impactantes do rap nacional.",
       "imagem": "https://picsum.photos/id/1043/400/300"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
+      "login": "admin",
+      "senha": "123",
+      "nome": "Administrador do Sistema",
+      "email": "admin@abc.com",
+      "admin": true
+    },
+    {
+      "id": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
+      "login": "user",
+      "senha": "123",
+      "nome": "Usuario Comum",
+      "email": "user@abc.com",
+      "admin": false
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "login": "gabriel",
+      "senha": "123",
+      "nome": "Gabriel Alves da Silva Diógenes",
+      "email": "gabriel@email.com",
+      "admin": false
+    },
+    {
+      "id": "8a931022-24a3-48f2-b989-c3f2f0bafd94",
+      "login": "tutu",
+      "senha": "1234",
+      "nome": "Gabriel Alves",
+      "email": "gabrieldiogenes4@gmail.com",
+      "admin": false
+    }
+  ],
+  "favoritos": [
+    {
+      "id": 1,
+      "usuarioId": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
+      "discoId": 2
+    },
+    {
+      "id": 2,
+      "usuarioId": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
+      "discoId": 3
+    },
+    {
+      "usuarioId": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
+      "discoId": 3,
+      "id": 3
+    },
+    {
+      "usuarioId": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
+      "discoId": 2,
+      "id": 4
+    },
+    {
+      "usuarioId": "8a931022-24a3-48f2-b989-c3f2f0bafd94",
+      "discoId": 2,
+      "id": 5
+    },
+    {
+      "usuarioId": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
+      "discoId": 10,
+      "id": 6
     }
   ]
 }

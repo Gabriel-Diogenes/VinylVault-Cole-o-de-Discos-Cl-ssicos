@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastro de usuário — VinylVault">
+  <title>Cadastro | VinylVault</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo" aria-label="VinylVault — início">
+        <div class="site-logo__icon" aria-hidden="true">♪</div>
+        <span class="site-logo__text">Vinyl<span>Vault</span></span>
+      </a>
+
+      <button class="hamburger" id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false">☰</button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="index.html#todos-discos" class="nav-link">Coleção</a>
+        <a href="cadastro_disco.html" class="nav-link" id="nav-gerenciar" hidden>Gerenciar</a>
+        <a href="favoritos.html" class="nav-link" id="nav-favoritos" hidden>Favoritos</a>
+        <a href="index.html#sobre" class="nav-link">Sobre</a>
+        <a href="login.html" class="nav-link" id="nav-login">Login</a>
+        <a href="#" class="nav-link" id="nav-logout" hidden>Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+    <div class="container py-5">
+      <div class="auth-card">
+        <h1 class="auth-title">Criar Conta</h1>
+        <p class="auth-sub">Cadastre-se para salvar seus álbuns favoritos.</p>
+
+        <form id="form-cadastro-usuario" class="auth-form" novalidate>
+          <div class="auth-field">
+            <label for="cadastro-nome">Nome completo</label>
+            <input type="text" id="cadastro-nome" name="nome" required placeholder="Seu nome">
+          </div>
+          <div class="auth-field">
+            <label for="cadastro-login">Login</label>
+            <input type="text" id="cadastro-login" name="login" required autocomplete="username"
+              placeholder="Login de acesso">
+          </div>
+          <div class="auth-field">
+            <label for="cadastro-email">E-mail</label>
+            <input type="email" id="cadastro-email" name="email" required autocomplete="email"
+              placeholder="seu@email.com">
+          </div>
+          <div class="auth-field">
+            <label for="cadastro-senha">Senha</label>
+            <input type="password" id="cadastro-senha" name="senha" required autocomplete="new-password"
+              placeholder="Sua senha">
+          </div>
+          <p id="cadastro-erro" class="auth-erro" role="alert"></p>
+          <p id="cadastro-sucesso" class="auth-sucesso" role="status" hidden></p>
+          <button type="submit" class="btn-vinyl auth-submit">Cadastrar</button>
+        </form>
+
+        <p class="auth-footer">
+          Já tem conta? <a href="login.html">Fazer login</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-logo">♪ VinylVault</p>
+      <p class="footer-copy">&copy; 2025 VinylVault · Projeto acadêmico — PUC Minas</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script>
+    const btnHamb = document.getElementById('btn-hamburger');
+    const nav = document.getElementById('site-nav');
+    btnHamb?.addEventListener('click', () => {
+      nav.classList.toggle('nav-open');
+      const open = nav.classList.contains('nav-open');
+      btnHamb.setAttribute('aria-expanded', open);
+      btnHamb.textContent = open ? '✕' : '☰';
+    });
+  </script>
+</body>
+</html>

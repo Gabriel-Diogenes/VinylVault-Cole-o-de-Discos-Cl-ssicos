@@ -1,5 +1,7 @@
 const API_BASE = window.location.origin;
 
+let favoritosUsuario = [];
+
 function estrelas(n) {
   return '★'.repeat(n) + '☆'.repeat(5 - n);
 }
@@ -8,10 +10,102 @@ function slugify(str) {
   return str.toLowerCase().replace(/\s+/g, '-');
 }
 
+async function carregarFavoritosUsuario() {
+  const usuario = getUsuarioLogado();
+  if (!usuario) {
+    favoritosUsuario = [];
+    return;
+  }
+  const res = await fetch(`${API_BASE}/favoritos?usuarioId=${usuario.id}`);
+  favoritosUsuario = await res.json();
+}
+
+function discoEhFavorito(discoId) {
+  const id = Number(discoId);
+  return favoritosUsuario.some(f => Number(f.discoId) === id);
+}
+
+function renderCardCol(disco) {
+  const col = document.createElement('div');
+  col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+  const ativo = discoEhFavorito(disco.id);
+  col.innerHTML = `
+    <article class="vinyl-card" onclick="window.location='detalhe.html?id=${disco.id}'">
+      <div class="vinyl-card__cover">
+        <img src="${disco.imagemPrincipal}" alt="Capa do álbum ${disco.nome}" loading="lazy">
+        <div class="vinyl-card__hover-overlay">
+          <span class="play-icon">▶</span>
+        </div>
+        ${disco.destaque ? '<span class="badge-destaque">Destaque</span>' : ''}
+        <button type="button" class="btn-favorito${ativo ? ' ativo' : ''}" data-disco-id="${disco.id}"
+          onclick="event.stopPropagation(); toggleFavorito(${disco.id})"
+          aria-label="${ativo ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}"
+          title="${ativo ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+          ${ativo ? '♥' : '♡'}
+        </button>
+      </div>
+      <div class="vinyl-card__body">
+        <h3 class="vinyl-card__title">${disco.nome}</h3>
+        <p class="vinyl-card__artist">${disco.artista}</p>
+        <div class="vinyl-card__meta">
+          <span class="vinyl-card__year">${disco.ano}</span>
+          <span class="vinyl-card__genre">${disco.genero}</span>
+        </div>
+        <div class="vinyl-card__stars">${estrelas(disco.avaliacao)}</div>
+      </div>
+    </article>`;
+  return col;
+}
+
+async function toggleFavorito(discoId) {
+  const usuario = getUsuarioLogado();
+  if (!usuario) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const idNum = Number(discoId);
+  const existente = favoritosUsuario.find(f => Number(f.discoId) === idNum);
+
+  try {
+    if (existente) {
+      await fetch(`${API_BASE}/favoritos/${existente.id}`, { method: 'DELETE' });
+      favoritosUsuario = favoritosUsuario.filter(f => f.id !== existente.id);
+    } else {
+      const res = await fetch(`${API_BASE}/favoritos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuarioId: usuario.id, discoId: idNum })
+      });
+      if (!res.ok) throw new Error();
+      favoritosUsuario.push(await res.json());
+    }
+    atualizarIconesFavorito(idNum);
+
+    if (document.getElementById('favoritos-grid')) {
+      await initFavoritos();
+    }
+  } catch {
+    alert('Não foi possível atualizar favoritos. Verifique o JSON Server.');
+  }
+}
+
+function atualizarIconesFavorito(discoId) {
+  const ativo = discoEhFavorito(discoId);
+  document.querySelectorAll(`.btn-favorito[data-disco-id="${discoId}"]`).forEach(btn => {
+    btn.classList.toggle('ativo', ativo);
+    btn.textContent = ativo ? '♥' : '♡';
+    btn.setAttribute('aria-label', ativo ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+    btn.title = ativo ? 'Remover dos favoritos' : 'Adicionar aos favoritos';
+  });
+}
+
 async function initHome() {
   try {
+    await carregarFavoritosUsuario();
     await montarCarousel();
     await montarCards();
+    await montarGrafico();
   } catch (err) {
     console.error('Erro ao carregar dados da home:', err);
     mostrarErro('#carousel-section', 'Não foi possível conectar ao servidor. Verifique se o JSON Server está rodando na porta 3000.');
@@ -66,30 +160,87 @@ async function montarCards() {
 
   grid.innerHTML = '';
 
-  discos.forEach(disco => {
-    const col = document.createElement('div');
-    col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
-    col.innerHTML = `
-      <article class="vinyl-card" onclick="window.location='detalhe.html?id=${disco.id}'">
-        <div class="vinyl-card__cover">
-          <img src="${disco.imagemPrincipal}" alt="Capa do álbum ${disco.nome}" loading="lazy">
-          <div class="vinyl-card__hover-overlay">
-            <span class="play-icon">▶</span>
-          </div>
-          ${disco.destaque ? '<span class="badge-destaque">Destaque</span>' : ''}
-        </div>
-        <div class="vinyl-card__body">
-          <h3 class="vinyl-card__title">${disco.nome}</h3>
-          <p class="vinyl-card__artist">${disco.artista}</p>
-          <div class="vinyl-card__meta">
-            <span class="vinyl-card__year">${disco.ano}</span>
-            <span class="vinyl-card__genre">${disco.genero}</span>
-          </div>
-          <div class="vinyl-card__stars">${estrelas(disco.avaliacao)}</div>
-        </div>
-      </article>`;
-    grid.appendChild(col);
+  discos.forEach(disco => grid.appendChild(renderCardCol(disco)));
+}
+
+async function montarGrafico() {
+  const canvas = document.getElementById('chart-generos');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const res = await fetch(`${API_BASE}/discos`);
+  const discos = await res.json();
+
+  const porGenero = {};
+  discos.forEach(d => {
+    porGenero[d.genero] = (porGenero[d.genero] || 0) + 1;
   });
+
+  const labels = Object.keys(porGenero);
+  const valores = Object.values(porGenero);
+  const cores = ['#d4a843', '#8a7d6b', '#c0392b', '#f0c968', '#4a4035', '#e8dfd0', '#2e2820', '#6b8e4e'];
+
+  new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Álbuns por gênero',
+        data: valores,
+        backgroundColor: cores.slice(0, labels.length),
+        borderColor: '#d4a843',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8a7d6b', maxRotation: 45, minRotation: 0 },
+          grid: { color: '#2e2820' }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: '#8a7d6b', stepSize: 1 },
+          grid: { color: '#2e2820' }
+        }
+      }
+    }
+  });
+}
+
+async function initFavoritos() {
+  protegerPaginaLogado();
+  await carregarFavoritosUsuario();
+
+  const grid = document.getElementById('favoritos-grid');
+  const countEl = document.getElementById('total-favoritos');
+  if (!grid) return;
+
+  if (favoritosUsuario.length === 0) {
+    grid.innerHTML = `
+      <div class="col-12 text-center py-5">
+        <p class="empty-search">Você ainda não favoritou nenhum álbum.</p>
+        <a href="index.html#todos-discos" class="btn-vinyl mt-3">Explorar Coleção</a>
+      </div>`;
+    if (countEl) countEl.textContent = '0 álbuns';
+    return;
+  }
+
+  const discoIds = favoritosUsuario.map(f => f.discoId);
+  const res = await fetch(`${API_BASE}/discos`);
+  const todos = await res.json();
+  const favoritos = todos.filter(d => discoIds.includes(d.id));
+
+  grid.innerHTML = '';
+  favoritos.forEach(disco => grid.appendChild(renderCardCol(disco)));
+  if (countEl) countEl.textContent = `${favoritos.length} álbum${favoritos.length !== 1 ? 's' : ''}`;
 }
 
 async function initDetalhe() {
@@ -102,6 +253,8 @@ async function initDetalhe() {
   }
 
   try {
+    await carregarFavoritosUsuario();
+
     const [resD, resF] = await Promise.all([
       fetch(`${API_BASE}/discos/${id}`),
       fetch(`${API_BASE}/faixas?discoId=${id}`)
@@ -126,6 +279,8 @@ function montarDetalheInfo(disco) {
   const container = document.getElementById('detalhe-info');
   if (!container) return;
 
+  const favAtivo = discoEhFavorito(disco.id);
+
   container.innerHTML = `
     <div class="row g-4 align-items-start">
       <div class="col-12 col-md-4">
@@ -137,7 +292,16 @@ function montarDetalheInfo(disco) {
       <div class="col-12 col-md-8">
         <div class="detalhe-header">
           <span class="detalhe-genre-badge">${disco.genero}</span>
-          <h1 class="detalhe-titulo">${disco.nome}</h1>
+          <div class="detalhe-titulo-row">
+            <h1 class="detalhe-titulo">${disco.nome}</h1>
+            <button type="button" class="btn-favorito btn-favorito--detalhe${favAtivo ? ' ativo' : ''}"
+              data-disco-id="${disco.id}"
+              onclick="toggleFavorito(${disco.id})"
+              aria-label="${favAtivo ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}"
+              title="${favAtivo ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+              ${favAtivo ? '♥' : '♡'}
+            </button>
+          </div>
           <h2 class="detalhe-artista">${disco.artista}</h2>
         </div>
         <div class="detalhe-infos-grid">
@@ -234,27 +398,7 @@ async function buscarDiscos(termo) {
   }
 
   grid.innerHTML = '';
-  filtrados.forEach(disco => {
-    const col = document.createElement('div');
-    col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
-    col.innerHTML = `
-      <article class="vinyl-card" onclick="window.location='detalhe.html?id=${disco.id}'">
-        <div class="vinyl-card__cover">
-          <img src="${disco.imagemPrincipal}" alt="Capa de ${disco.nome}" loading="lazy">
-          <div class="vinyl-card__hover-overlay"><span class="play-icon">▶</span></div>
-        </div>
-        <div class="vinyl-card__body">
-          <h3 class="vinyl-card__title">${disco.nome}</h3>
-          <p class="vinyl-card__artist">${disco.artista}</p>
-          <div class="vinyl-card__meta">
-            <span class="vinyl-card__year">${disco.ano}</span>
-            <span class="vinyl-card__genre">${disco.genero}</span>
-          </div>
-          <div class="vinyl-card__stars">${estrelas(disco.avaliacao)}</div>
-        </div>
-      </article>`;
-    grid.appendChild(col);
-  });
+  filtrados.forEach(disco => grid.appendChild(renderCardCol(disco)));
 }
 
 function mostrarErro(seletor, msg) {
@@ -268,6 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const inputBusca = document.getElementById('input-busca');
     const formBusca = document.getElementById('form-busca');
+    const params = new URLSearchParams(window.location.search);
+    const buscaInicial = params.get('busca');
+
     if (formBusca) {
       formBusca.addEventListener('submit', e => {
         e.preventDefault();
@@ -275,12 +422,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     if (inputBusca) {
+      if (buscaInicial) inputBusca.value = buscaInicial;
       let debounce;
       inputBusca.addEventListener('input', () => {
         clearTimeout(debounce);
         debounce = setTimeout(() => buscarDiscos(inputBusca.value), 400);
       });
+      if (buscaInicial) buscarDiscos(buscaInicial);
     }
+  }
+
+  if (document.getElementById('favoritos-grid')) {
+    initFavoritos();
   }
 
   if (document.getElementById('detalhe-info')) {
@@ -510,6 +663,7 @@ function confirmarDelete(id, nome) {
 }
 
 function initCadastro() {
+  protegerPaginaAdmin();
   carregarTabelaDiscos();
   document.getElementById('form-disco')?.addEventListener('submit', async e => {
     e.preventDefault();
@@ -588,3 +742,4 @@ function initCadastro() {
 
 window.editarDisco     = editarDisco;
 window.confirmarDelete = confirmarDelete;
+window.toggleFavorito  = toggleFavorito;
